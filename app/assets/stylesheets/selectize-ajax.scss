@@ -1,0 +1,57 @@
+.input-group-btn {
+  .btn-remote {
+    height: 38px;
+    top: -1px;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    border: 0 !important;
+    box-shadow: 0 0 0 1px #5d9cec;
+    line-height: 37px;
+
+    .glyphicon {
+      top: -2px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+  .btn-remote:hover {
+    border: none !important;
+  }
+
+  .btn-remote:focus {
+    border: none !important;
+  }
+}
+
+.selectize-ajax-wrapper {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+}
+
+.selectize-ajax-wrapper > .form-group {
+  margin-bottom: 0;
+  flex: 1;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.selectize-ajax-wrapper {
+  margin-bottom: 15px;
+  margin-left: 10px;
+  align-items: flex-start;
+}
+
+.selectize-ajax-wrapper--empty {
+  margin-left: 0;
+}
+
+.selectize-ajax-wrapper--empty > .form-group {
+  margin-left: -10px;
+  margin-right: -10px;
+}
+
+.selectize-ajax-wrapper .selectize-input,
+.selectize-ajax-wrapper .selectize-control .selectize-input.input-active {
+  display: block;
+}
