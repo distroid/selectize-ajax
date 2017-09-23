@@ -32,6 +32,10 @@ module Selectize::Ajax::Core
       options.label || field.to_s.humanize
     end
 
+    def edit_resource
+      @edit_resource ||= options.edit_path.gsub(%r{^/+}, '').split('/').first
+    end
+
     def resource_object
       @model_object ||= if resource_object?
         resource
@@ -41,7 +45,7 @@ module Selectize::Ajax::Core
     end
 
     def field_required?
-      return false if resource_object.blank? || !resource_object.respond_to?('_validators')
+      return false if resource_object.blank? || !resource_object.respond_to?(:_validators)
       resource_object._validators(field).include?(ActiveRecord::Validations::PresenceValidator)
     rescue
       false

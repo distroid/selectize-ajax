@@ -19,7 +19,9 @@ module Selectize::Ajax::Core
         $(function(event) {
           setTimeout(function() {
             #{selectize_script}
-            #{ajax_complete_script}
+            #{ajax_add_complete_script}
+            #{edit_button_script}
+            #{ajax_edit_complete_script}
             #{clear_form_script}
           });
         });
@@ -50,7 +52,9 @@ module Selectize::Ajax::Core
       });"
     end
 
-    def ajax_complete_script
+    def ajax_add_complete_script
+      return unless control.options.add_button
+
       "$('#{control.options.add_modal}').on('ajax:complete', function(evt, data, status, errors) {
         if(data.status == 200 || data.status == 201) {
           if (data.responseJSON == null) {
@@ -66,6 +70,49 @@ module Selectize::Ajax::Core
             $('*[data-target=\"#{control.options.add_modal}\"')[1].reset();
           }
         }
+      });"
+    end
+
+    def ajax_edit_complete_script
+      return unless control.options.edit_button
+
+      "$(document).on('ajax:complete', '#{control.options.edit_modal}', function(e, data) {
+        if (data.responseJSON == null) {
+            $('#{control.options.edit_modal}').find('.modal-content').html(data.responseText);
+            $('#{control.options.edit_modal}').trigger('error');
+        } else {
+          data = data.responseJSON;
+          $('#{control.options.edit_modal}').modal('hide');
+          if (data.value != null && data.label != null) {
+            $(\"div[data-value='\" + data.value + \"']\").find('span').text(data.label);
+            $(\"div.selected[data-value='\" + data.value + \"']\").text(data.label);
+          }
+        }
+      });"
+    end
+
+    def edit_button_script
+      return unless control.options.edit_button
+
+      "var $edit_link = $('.edit-#{control.resource_name}');
+      if (!$('##{control.resource_id}').val()) {
+        $edit_link.hide();
+        $('##{control.resource_id}')
+          .closest('.selectize-ajax-wrapper')
+          .addClass('selectize-ajax-wrapper--empty');
+      }
+      $(document).on('change', '##{control.resource_id}', function() {
+        if (!$(this).val()) {
+          $('##{control.resource_id}')
+            .closest('.selectize-ajax-wrapper')
+            .addClass('selectize-ajax-wrapper--empty');
+          return $edit_link.hide();
+        }
+        $edit_link.show();
+        $edit_link.attr('href', '/#{control.edit_resource}/' + ($(this).val()) + '/edit');
+        return $('##{control.resource_id}')
+          .closest('.selectize-ajax-wrapper')
+          .addClass('selectize-ajax-wrapper--empty');
       });"
     end
 

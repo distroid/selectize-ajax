@@ -46,6 +46,11 @@
   margin-left: 0;
 }
 
+.selectize-ajax-wrapper--empty a[class*='add-'] {
+  border-bottom-right-radius: 3px !important;
+  border-top-right-radius: 3px !important;
+}
+
 .selectize-ajax-wrapper--empty > .form-group {
   margin-left: -10px;
   margin-right: -10px;
