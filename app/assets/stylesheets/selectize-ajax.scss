@@ -1,26 +1,13 @@
 .input-group-btn {
   .btn-remote {
-    height: 38px;
-    top: -1px;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    border: 0 !important;
-    box-shadow: 0 0 0 1px #5d9cec;
-    line-height: 37px;
+    border-width: 2px;
+  }
+}
 
-    .glyphicon {
-      top: -2px;
-      display: inline-block;
-      vertical-align: middle;
-    }
-  }
-  .btn-remote:hover {
-    border: none !important;
-  }
-
-  .btn-remote:focus {
-    border: none !important;
-  }
+.selectize-input-group {
+  position: relative;
+  display: table;
+  border-collapse: separate;
 }
 
 .selectize-ajax-wrapper {
@@ -29,8 +16,7 @@
   align-items: flex-end;
 }
 
-.selectize-ajax-wrapper > .form-group {
-  margin-bottom: 0;
+.selectize-ajax-wrapper.form-group {
   flex: 1;
   margin-left: 0;
   margin-right: 0;
@@ -51,7 +37,7 @@
   border-top-right-radius: 3px !important;
 }
 
-.selectize-ajax-wrapper--empty > .form-group {
+.selectize-ajax-wrapper--empty.form-group {
   margin-left: -10px;
   margin-right: -10px;
 }

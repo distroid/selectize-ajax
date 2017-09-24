@@ -42,6 +42,7 @@ module Selectize::Ajax::Core
           item_text = item.find('span').text()
           $('##{control.resource_name}_title').val(item_text)
         },
+        #{selectize_remote_load_function}
         render: {
           item: function(item, escape) {
             return '<div>' +
@@ -50,6 +51,28 @@ module Selectize::Ajax::Core
           }
         }
       });"
+    end
+
+    def selectize_remote_load_function
+      return if control.options.collection_path.blank?
+
+      "load: function(query, callback) {
+        if (!query.length) return callback();
+        var self = this;
+        $.ajax({
+          url: '#{control.options.collection_path}',
+          type: 'GET',
+          dataType: 'json',
+          data: {
+            #{control.options.search_param}: query
+          },
+          error: function() { callback(); },
+          success: function(res) {
+            self.clearOptions();
+            callback(res);
+          }
+        });
+      },"
     end
 
     def ajax_add_complete_script
@@ -112,7 +135,7 @@ module Selectize::Ajax::Core
         $edit_link.attr('href', '/#{control.edit_resource}/' + ($(this).val()) + '/edit');
         return $('##{control.resource_id}')
           .closest('.selectize-ajax-wrapper')
-          .addClass('selectize-ajax-wrapper--empty');
+          .removeClass('selectize-ajax-wrapper--empty');
       });"
     end
 

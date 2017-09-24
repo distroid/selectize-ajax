@@ -45,8 +45,13 @@ module Selectize::Ajax::Core
     end
 
     def field_required?
+      return false unless options.required
       return false if resource_object.blank? || !resource_object.respond_to?(:_validators)
-      resource_object._validators(field).include?(ActiveRecord::Validations::PresenceValidator)
+      validators = resource_object._validators[field].map(&:class) rescue []
+      [
+        validators.include?(ActiveModel::Validations::PresenceValidator),
+        validators.include?(ActiveRecord::Validations::PresenceValidator)
+      ].any?
     rescue
       false
     end

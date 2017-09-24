@@ -1,12 +1,13 @@
-.selectize-ajax-wrapper.selectize-ajax-wrapper--empty
-  .form-group{ class: ('has-error' if control.has_error?) }
-    = label_tag "#{control.resource_name}[#{control.field}]",
-      class: ('col-sm-3 control-label' if control.options.horizontal) do
-      = '*' if control.field_required?
-      = control.label
-    %div{ class: "#{'selectize-input-group' if control.can_add?} #{'col-sm-9' if control.options.horizontal}" }
-      = text_field_tag "#{control.resource_name}[#{control.field}]",
-        control.value, id: control.resource_id, class: 'custom-form__input'
+.form-group.selectize-ajax-wrapper{ class: ('has-error' if control.has_error?) }
+  = label_tag "#{control.resource_name}[#{control.field}]",
+    class: ('col-sm-3 control-label' if control.options.horizontal) do
+    = '*' if control.field_required?
+    = control.label
+  %div{ class: "#{'selectize-input-group' if control.can_add?} #{'col-sm-9' if control.options.horizontal}" }
+    = text_field_tag "#{control.resource_name}[#{control.field}]",
+      control.value, id: control.resource_id, class: 'custom-form__input'
+
+    - if control.can_add? || control.can_edit?
       %span.input-group-btn
         - if control.can_add?
           = link_to control.options.add_path, class: "btn btn-primary btn-remote add-#{control.resource_name}",
@@ -19,8 +20,8 @@
             %span.glyphicon.glyphicon-edit
             = control.options.edit_button_text
 
-    - if control.has_error?
-      %span.help-block.error{ class: ('col-sm-9 col-sm-offset-3' if control.options.horizontal) }
-        = control.resource_object.errors[control.field].first
+  - if control.has_error?
+    %span.help-block.error{ class: ('col-sm-9 col-sm-offset-3' if control.options.horizontal) }
+      = control.resource_object.errors[control.field].first
 
   = script.html_safe
