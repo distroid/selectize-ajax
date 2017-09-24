@@ -13,12 +13,10 @@ module Selectize::Ajax::Core
     def default_options
       {
         collection: [],
-        add_button: true,
         add_modal: nil,
-        add_path: '#',
+        add_path: nil,
         add_button_text: I18n.t('selectize_ajax.add_button_text'),
-        edit_button: true,
-        edit_path: '#',
+        edit_path: nil,
         edit_modal: nil,
         edit_button_text: I18n.t('selectize_ajax.edit_button_text'),
         horizontal: true,

@@ -29,11 +29,11 @@ module Selectize::Ajax::Core
     end
 
     def label
-      options.label || field.to_s.humanize
+      options.label || field.to_s.titleize
     end
 
     def edit_resource
-      @edit_resource ||= options.edit_path.gsub(%r{^/+}, '').split('/').first
+      @edit_resource ||= options.edit_path&.gsub(%r{^/+}, '')&.split('/')&.first
     end
 
     def resource_object
@@ -53,6 +53,14 @@ module Selectize::Ajax::Core
 
     def has_error?
       @has_error ||= resource_object&.errors&.include?(field)
+    end
+
+    def can_add?
+      options.add_path.present? && options.add_modal.present?
+    end
+
+    def can_edit?
+      options.edit_path.present? && options.edit_modal.present?
     end
 
     private

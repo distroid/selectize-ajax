@@ -53,7 +53,7 @@ module Selectize::Ajax::Core
     end
 
     def ajax_add_complete_script
-      return unless control.options.add_button
+      return unless control.can_add?
 
       "$('#{control.options.add_modal}').on('ajax:complete', function(evt, data, status, errors) {
         if(data.status == 200 || data.status == 201) {
@@ -74,7 +74,7 @@ module Selectize::Ajax::Core
     end
 
     def ajax_edit_complete_script
-      return unless control.options.edit_button
+      return unless control.can_edit?
 
       "$(document).on('ajax:complete', '#{control.options.edit_modal}', function(e, data) {
         if (data.responseJSON == null) {
@@ -92,7 +92,7 @@ module Selectize::Ajax::Core
     end
 
     def edit_button_script
-      return unless control.options.edit_button
+      return unless control.can_edit?
 
       "var $edit_link = $('.edit-#{control.resource_name}');
       if (!$('##{control.resource_id}').val()) {

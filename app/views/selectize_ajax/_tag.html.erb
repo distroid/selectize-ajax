@@ -5,18 +5,18 @@
       <%= '*' if control.field_required? %>
       <%= control.label %>
     <% end %>
-    <div class="<%= 'selectize-input-group' if control.options.add_button %> <%= 'col-sm-9' if control.options.horizontal %>">
+    <div class="<%= 'selectize-input-group' if control.can_add? %> <%= 'col-sm-9' if control.options.horizontal %>">
       <%= text_field_tag "#{control.resource_name}[#{control.field}]",
         control.value, id: control.resource_id, class: 'custom-form__input' %>
       <span class="input-group-btn">
-        <% if control.options.add_button %>
+        <% if control.can_add? %>
           <%= link_to control.options.add_path, class: "btn btn-primary btn-remote add-#{control.resource_name}",
             data: { toggle: 'modal', target: control.options.add_modal } do %>
             <span class="glyphicon glyphicon-plus"></span>
             <%= control.options.add_button_text %>
           <% end %>
         <% end %>
-        <% if control.options.edit_button %>
+        <% if control.can_edit? %>
           <%= link_to control.options.edit_path, class: "btn btn-primary btn-remote edit-#{control.resource_name}",
             data: { toggle: 'modal', target: control.options.edit_modal } do %>
             <span class="glyphicon glyphicon-edit"></span>
