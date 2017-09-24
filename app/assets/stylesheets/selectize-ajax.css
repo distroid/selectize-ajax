@@ -1,7 +1,4 @@
-.input-group-btn {
-  .btn-remote {
-    border-width: 2px;
-  }
+.input-group-btn .btn-remote {
 }
 
 .selectize-input-group {

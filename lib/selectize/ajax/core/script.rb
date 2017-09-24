@@ -1,15 +1,13 @@
 module Selectize::Ajax::Core
   class Script
-    attr_accessor :control, :type
+    attr_accessor :control
 
-    def initialize(control, type)
+    def initialize(control)
       @control = control
-      @type = type
     end
 
     def call
-      return if [:tag].exclude?(type)
-      send("js_script_#{type}")
+      js_script_tag
     end
 
     private
@@ -79,7 +77,7 @@ module Selectize::Ajax::Core
       return unless control.can_add?
 
       "$('#{control.options.add_modal}').on('ajax:complete', function(evt, data, status, errors) {
-        if(data.status == 200 || data.status == 201) {
+        if (data.status == 200 || data.status == 201) {
           if (data.responseJSON == null) {
             $('#{control.options.add_modal}').find('.modal-content').html(data.responseText);
             $('#{control.options.add_modal}').trigger('error');
@@ -90,7 +88,10 @@ module Selectize::Ajax::Core
             selectizer.addOption(provider);
             selectizer.addItem(provider.value);
             $('#{control.options.add_modal}').modal('hide');
-            $('*[data-target=\"#{control.options.add_modal}\"')[1].reset();
+            $selector = $('form[data-target=\"#{control.options.add_modal}\"');
+            if ($selector.length > 0) {
+              $selector[0].reset();
+            }
           }
         }
       });"
@@ -99,7 +100,10 @@ module Selectize::Ajax::Core
     def ajax_edit_complete_script
       return unless control.can_edit?
 
-      "$(document).on('ajax:complete', '#{control.options.edit_modal}', function(e, data) {
+      "$(document).on('hidden.bs.modal', '#{control.options.edit_modal}', function() {
+        return clearSelectizeModal($(this));
+      });
+      $(document).on('ajax:complete', '#{control.options.edit_modal}', function(e, data) {
         if (data.responseJSON == null) {
             $('#{control.options.edit_modal}').find('.modal-content').html(data.responseText);
             $('#{control.options.edit_modal}').trigger('error');
@@ -140,11 +144,20 @@ module Selectize::Ajax::Core
     end
 
     def clear_form_script
-      "$('#{control.options.add_modal}').on('hidden.bs.modal', function () {
-        $('*[data-target=\"#{control.options.add_modal}\"')[1].reset();
+      "$('#{control.options.add_modal}').on('hidden.bs.modal, show.bs.modal', function () {
+        $selector = $('form[data-target=\"#{control.options.add_modal}\"');
+        if ($selector.length > 0) {
+          $selector[0].reset();
+        }
         $('.error').each(function () { $(this).remove(); });
         $('.field_with_errors').each(function () { $(this).removeClass('field_with_errors'); });
-      })"
+      });
+      window.clearSelectizeModal = function(modal) {
+        modal.find('.modal-header').empty();
+        modal.find('.modal-body').empty();
+        return modal.data('bs.modal', null);
+      };
+      "
     end
   end
 end
