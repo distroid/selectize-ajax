@@ -17,13 +17,17 @@ And then execute:
 Or install it yourself as:
 
     $ gem install selectize-ajax
+    
+In your application.css, include the following:
+
+    *= require selectize-ajax
 
 ## Usage
 
 For example you want create dropdown control for choosing post category
 
 ```ruby
-<%= selectize_ajax_tag f.object, :category_id, collection: Category.collection %>
+selectize_ajax_tag f.object, :category_id, collection: Category.collection
 ```
 
 This code generate simple selectize dropdown.
@@ -34,7 +38,7 @@ The collection should be the following:
   ...
   { value: <id>, label: <title> },
   ...
- ]
+]
 ```
 
 ```ruby
@@ -48,7 +52,7 @@ end
 
 For use ajax autocomplete you must add path for search:
 ```ruby
-<%= selectize_ajax_tag f.object, :category_id, collection_path: categories_autocomplete_path %>
+selectize_ajax_tag f.object, :category_id, collection_path: categories_autocomplete_path
 ```
 
 By default search param is `q`, if you want use other param you need set `search_param` for control.
