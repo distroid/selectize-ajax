@@ -1,8 +1,8 @@
-Dir[File.expand_path("#{File.dirname(__FILE__)}/ajax/core/*.rb")].each do |resource|
-  require resource
-end
 require 'selectize/ajax/version'
 require 'selectize/ajax/view_helpers'
+require 'selectize/ajax/core/control'
+require 'selectize/ajax/core/script'
+require 'selectize/ajax/core/settings'
 
 if defined?(Rails)
   require 'selectize/ajax/railtie'
