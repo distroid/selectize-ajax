@@ -34,11 +34,6 @@
   border-top-right-radius: 3px !important;
 }
 
-.selectize-ajax-wrapper--empty.form-group {
-  margin-left: -10px;
-  margin-right: -10px;
-}
-
 .selectize-ajax-wrapper .selectize-input,
 .selectize-ajax-wrapper .selectize-control .selectize-input.input-active {
   display: block;

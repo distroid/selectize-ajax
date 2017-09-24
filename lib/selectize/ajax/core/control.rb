@@ -57,7 +57,7 @@ module Selectize::Ajax::Core
     end
 
     def has_error?
-      @has_error ||= resource_object&.errors&.include?(field)
+      @has_error ||= resource_object? ? resource_object&.errors&.include?(field) : false
     end
 
     def can_add?
@@ -71,7 +71,7 @@ module Selectize::Ajax::Core
     private
 
     def resource_object?
-      !resource.is_a?(String) || !resource.is_a?(Symbol)
+      @_is_object ||= [resource.is_a?(String), resource.is_a?(Symbol)].none?
     end
   end
 end
