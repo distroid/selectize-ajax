@@ -9,5 +9,5 @@ if defined?(Rails)
   require 'selectize/ajax/engine'
 end
 
-module Selectize::Ajax
+module Selectize
 end
