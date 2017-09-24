@@ -1,14 +1,14 @@
 <div class="<%= ('has-error' if control.has_error?) %> form-group selectize-ajax-wrapper">
   <% if control.label %>
     <%= label_tag "#{control.resource_name}[#{control.field}]",
-      class: ('col-sm-3 control-label' if control.options.horizontal) do %>
+      class: (control.options.horizontal ? 'col-sm-3 control-label' : 'col-sm-12') do %>
       <%= '*' if control.field_required? %>
       <%= control.label %>
     <% end %>
   <% end %>
-  <div class="<%= 'selectize-input-group' if control.can_add? %> <%= 'col-sm-9' if control.options.horizontal %>">
-    <%= text_field_tag "#{control.resource_name}[#{control.field}]",
-      control.value, id: control.resource_id, class: 'custom-form__input' %>
+  <div class="<%= control.wrap_classes %>">
+    <%= text_field_tag "#{control.resource_name}[#{control.field}]", control.value, id: control.resource_id,
+        placeholder: control.options.placeholder, class: control.options.input_html[:class] %>
     <% if control.can_add? || control.can_edit? %>
       <span class="input-group-btn">
         <% if control.can_add? %>
@@ -29,7 +29,7 @@
     <% end %>
   </div>
   <% if control.has_error? %>
-    <span class="<%= ('col-sm-9 col-sm-offset-3' if control.options.horizontal) %> help-block error">
+    <span class="<%= (control.options.horizontal ? 'col-sm-9 col-sm-offset-3' : 'col-sm-12') %> help-block error">
       <%= control.resource_object.errors[control.field].first %>
     </span>
   <% end %>

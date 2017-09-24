@@ -56,6 +56,13 @@ module Selectize::Ajax::Core
       false
     end
 
+    def wrap_classes
+      classes = [options.wrap_class]
+      classes << 'selectize-input-group' if can_add?
+      classes << (options.horizontal ? 'col-sm-9' : 'col-sm-12')
+      classes.reject!(&:blank?).join(' ')
+    end
+
     def has_error?
       @has_error ||= resource_object? ? resource_object&.errors&.include?(field) : false
     end

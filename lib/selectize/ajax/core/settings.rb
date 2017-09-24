@@ -23,6 +23,11 @@ module Selectize::Ajax::Core
         horizontal: true,
         collection_path: nil,
         search_param: 'q',
+        placeholder: nil,
+        wrap_class: '',
+        input_html: {
+          class: ''
+        },
         label: nil,
         value: nil
       }

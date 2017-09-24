@@ -35,11 +35,6 @@ module Selectize::Ajax::Core
         sortField: 'label',
         searchField: 'label',
         options: #{control.options.collection.to_json},
-        onItemAdd: function(value, item) {
-          item = $(item[0])
-          item_text = item.find('span').text()
-          $('##{control.resource_name}_title').val(item_text)
-        },
         #{selectize_remote_load_function}
         render: {
           item: function(item, escape) {
@@ -77,6 +72,10 @@ module Selectize::Ajax::Core
       return unless control.can_add?
 
       "$('#{control.options.add_modal}').on('ajax:complete', function(evt, data, status, errors) {
+        if (typeof data == 'undefined') {
+          console.error('Somthing went wrong, form submit return empty response.');
+          return;
+        }
         if (data.status == 200 || data.status == 201) {
           if (data.responseJSON == null) {
             $('#{control.options.add_modal}').find('.modal-content').html(data.responseText);

@@ -17,7 +17,7 @@ And then execute:
 Or install it yourself as:
 
     $ gem install selectize-ajax
-    
+
 In your application.css, include the following:
 
     *= require selectize-ajax
@@ -111,21 +111,24 @@ For edit selected item you should add new modal and edit action path.
 
 ## All options
 
- Parameter        | Values            | Default
-------------------|:------------------|:----------------
-`label`           | string            | From object
-`value`           | mixed             | From object
-`required`        | true \| false     | From object
-`collection`      | array             | []
-`add_modal`       | string            | --
-`add_path`        | string            | --
-`add_button_text` | string            | I18n.t('selectize_ajax.add_button_text')
-`edit_path`       | string            | --
-`edit_modal`      | string            | --
-`edit_button_text`| string            | I18n.t('selectize_ajax.edit_button_text')
-`horizontal`      | true \| false     | true
-`collection_path` | string            | --
-`search_param`    | string            | `q`
+ Parameter          | Values            | Default
+--------------------|:------------------|:----------------
+`label`             | string            | From object
+`value`             | mixed             | From object
+`placeholder`       | string            | --
+`wrap_class`        | string            | --
+`input_html[class]` | string            | --
+`required`          | true \| false     | From object
+`collection`        | array             | []
+`add_modal`         | string            | --
+`add_path`          | string            | --
+`add_button_text`   | string            | I18n.t('selectize_ajax.add_button_text')
+`edit_path`         | string            | --
+`edit_modal`        | string            | --
+`edit_button_text`  | string            | I18n.t('selectize_ajax.edit_button_text')
+`horizontal`        | true \| false     | true
+`collection_path`   | string            | --
+`search_param`      | string            | `q`
 
 ## Contributing
 
