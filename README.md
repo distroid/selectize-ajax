@@ -109,6 +109,15 @@ For edit selected item you should add new modal and edit action path.
 %>
 ```
 
+> **WARNING**: if you want use  `edit_path` and do not have record id for generate link path you need use following templates:
+
+ - Replace ID to string `{{id}}` - `edit_category_path(id: '{{id}}')`
+ - Or use `edit_category_path(id: f.object.category_id || '{{id}}')`
+ - Or write hardcoded path without rails hepler `'/category/{{id}}/edit'` **(not recomended)**
+
+Script automaticly will be replace `{{id}}` param to selected value.
+
+
 ## All options
 
  Parameter          | Values            | Default
