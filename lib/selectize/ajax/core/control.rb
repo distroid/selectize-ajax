@@ -29,7 +29,7 @@ module Selectize::Ajax::Core
     end
 
     def label
-      options.label || field.to_s.titleize
+      (options.label || field.to_s.titleize) if options.label != false
     end
 
     def edit_resource

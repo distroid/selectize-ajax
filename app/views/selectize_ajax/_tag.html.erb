@@ -1,8 +1,10 @@
 <div class="<%= ('has-error' if control.has_error?) %> form-group selectize-ajax-wrapper">
-  <%= label_tag "#{control.resource_name}[#{control.field}]",
-    class: ('col-sm-3 control-label' if control.options.horizontal) do %>
-    <%= '*' if control.field_required? %>
-    <%= control.label %>
+  <% if control.label %>
+    <%= label_tag "#{control.resource_name}[#{control.field}]",
+      class: ('col-sm-3 control-label' if control.options.horizontal) do %>
+      <%= '*' if control.field_required? %>
+      <%= control.label %>
+    <% end %>
   <% end %>
   <div class="<%= 'selectize-input-group' if control.can_add? %> <%= 'col-sm-9' if control.options.horizontal %>">
     <%= text_field_tag "#{control.resource_name}[#{control.field}]",
