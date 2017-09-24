@@ -1,0 +1,40 @@
+.input-group-btn .btn-remote {
+}
+
+.selectize-input-group {
+  position: relative;
+  display: table;
+  border-collapse: separate;
+}
+
+.selectize-ajax-wrapper {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+}
+
+.selectize-ajax-wrapper.form-group {
+  flex: 1;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.selectize-ajax-wrapper {
+  margin-bottom: 15px;
+  margin-left: 10px;
+  align-items: flex-start;
+}
+
+.selectize-ajax-wrapper--empty {
+  margin-left: 0;
+}
+
+.selectize-ajax-wrapper--empty a[class*='add-'] {
+  border-bottom-right-radius: 3px !important;
+  border-top-right-radius: 3px !important;
+}
+
+.selectize-ajax-wrapper .selectize-input,
+.selectize-ajax-wrapper .selectize-control .selectize-input.input-active {
+  display: block;
+}
