@@ -9,17 +9,17 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Ryabov Ruslan']
   spec.email         = ['diserve.it@gmail.com']
 
-  spec.summary       = %q{Generate Selectize dropdown with add and edit actions.}
-  spec.description   = %q{Generate Selectize dropdown with add and edit actions.}
+  spec.summary       = %q{Useful selectize form control.}
+  spec.description   = %q{Useful selectize form control with autocomplete, create and edit items by ajax.}
   spec.homepage      = 'https://github.com/distroid/selectize-ajax'
-  spec.license       = "MIT"
+  spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
   end
-  spec.bindir        = "exe"
+  spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
-  spec.require_paths = ["lib"]
+  spec.require_paths = ['lib']
 
   spec.add_development_dependency 'bundler', '~> 1.13'
   spec.add_development_dependency 'rake', '~> 10.0'
