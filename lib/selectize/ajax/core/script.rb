@@ -126,6 +126,14 @@ module Selectize::Ajax::Core
         $('##{control.resource_id}')
           .closest('.selectize-ajax-wrapper')
           .addClass('selectize-ajax-wrapper--empty');
+      } else {
+        $edit_link.attr(
+          'href',
+          '#{control.edit_resource_template}'.replace(
+            '{{id}}',
+            $('##{control.resource_id}').val()
+          )
+        );
       }
       $(document).on('change', '##{control.resource_id}', function() {
         if (!$(this).val()) {
@@ -135,7 +143,7 @@ module Selectize::Ajax::Core
           return $edit_link.hide();
         }
         $edit_link.show();
-        $edit_link.attr('href', '/#{control.edit_resource}/' + ($(this).val()) + '/edit');
+        $edit_link.attr('href', '#{control.edit_resource_template}'.replace('{{id}}', $(this).val()));
         return $('##{control.resource_id}')
           .closest('.selectize-ajax-wrapper')
           .removeClass('selectize-ajax-wrapper--empty');

@@ -32,8 +32,13 @@ module Selectize::Ajax::Core
       (options.label || field.to_s.titleize) if options.label != false
     end
 
-    def edit_resource
-      @edit_resource ||= options.edit_path&.gsub(%r{^/+}, '')&.split('/')&.first
+    def edit_resource_template
+      @edit_resource ||= options.edit_path if options.edit_path.index('{{id}}').blank?
+      @edit_resource ||= options.edit_path.split('/').reverse.map do |part|
+        break '{{id}}' unless part.to_i.zero?
+        part
+      end.reverse.join('/')
+      URI.unescape(@edit_resource)
     end
 
     def resource_object
