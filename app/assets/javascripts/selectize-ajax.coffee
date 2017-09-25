@@ -7,7 +7,7 @@ window.SelectizeAjax = class SelectizeAjax
   default_options =
     resource_id: '',
     resource_name: '',
-    collection: '{}',
+    collection: {},
     collection_path: null,
     search_param: 'q',
     add_modal: null,
