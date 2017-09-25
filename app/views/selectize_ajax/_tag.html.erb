@@ -12,14 +12,16 @@
     <% if control.can_add? || control.can_edit? %>
       <span class="input-group-btn">
         <% if control.can_add? %>
-          <%= link_to control.options.add_path, class: "btn btn-primary btn-remote add-#{control.resource_name}",
+          <%= link_to control.options.add_path,
+            class: "btn btn-primary btn-remote add-#{control.resource_name} #{control.options.add_button_class}",
             data: { toggle: 'modal', target: control.options.add_modal } do %>
             <span class="glyphicon glyphicon-plus"></span>
             <%= control.options.add_button_text %>
           <% end %>
         <% end %>
         <% if control.can_edit? %>
-          <%= link_to control.options.edit_path, class: "btn btn-primary btn-remote edit-#{control.resource_name}",
+          <%= link_to control.options.edit_path,
+            class: "btn btn-primary btn-remote edit-#{control.resource_name} #{control.options.edit_button_class}",
             data: { toggle: 'modal', target: control.options.edit_modal } do %>
             <span class="glyphicon glyphicon-edit"></span>
             <%= control.options.edit_button_text %>
