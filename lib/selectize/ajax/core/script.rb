@@ -25,13 +25,13 @@ module Selectize::Ajax::Core
     def tag_options
       options = {
         resource_id: control.resource_id,
-        resource_name: control.resource_name,
-        search_param: control.options.search_param.presence || ''
+        resource_name: control.resource_name
       }
       if control.options.collection.present?
         options[:collection] = control.options.collection
       end
       if control.options.collection_path.present?
+        options[:search_param] = control.options.search_param.presence
         options[:collection_path] = control.options.collection_path
       end
       if control.can_edit?
