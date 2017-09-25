@@ -73,7 +73,7 @@ window.SelectizeAjax = class SelectizeAjax
       return console.error 'Somthing went wrong, form submit return empty response.' unless data?
 
       if data.status == 200 or data.status == 201
-        if data.responseJSON == null
+        if data.responseJSON == null || typeof data.responseJSON == 'undefined'
           $(_self.options.add_modal).find('.modal-content').html data.responseText
           $(_self.options.add_modal).trigger 'error'
         else
@@ -103,7 +103,7 @@ window.SelectizeAjax = class SelectizeAjax
       clearSelectizeModal $(this)
 
     $(document).on 'ajax:complete', _self.options.edit_modal, (e, data) ->
-      if data.responseJSON == null
+      if data.responseJSON == null || typeof data.responseJSON == 'undefined'
         $(_self.options.edit_modal).find('.modal-content').html data.responseText
         $(_self.options.edit_modal).trigger 'error'
       else
