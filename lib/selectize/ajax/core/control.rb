@@ -21,11 +21,8 @@ module Selectize::Ajax::Core
     end
 
     def value
-      if resource_object? && resource.respond_to?(field)
-        resource.send(field)
-      else
-        options.value
-      end
+      return resource.send(field) if resource_object? && resource.respond_to?(field)
+      options.value
     end
 
     def label
@@ -33,6 +30,8 @@ module Selectize::Ajax::Core
     end
 
     def edit_resource_template
+      return unless can_edit?
+
       @edit_resource ||= options.edit_path if options.edit_path.index('{{id}}').blank?
       @edit_resource ||= options.edit_path.split('/').reverse.map do |part|
         break '{{id}}' unless part.to_i.zero?
