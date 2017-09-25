@@ -132,9 +132,11 @@ Script automaticly will be replace `{{id}}` param to selected value.
 `add_modal`         | string            | --
 `add_path`          | string            | --
 `add_button_text`   | string            | I18n.t('selectize_ajax.add_button_text')
+`add_button_class`  | string            | --
 `edit_path`         | string            | --
 `edit_modal`        | string            | --
 `edit_button_text`  | string            | I18n.t('selectize_ajax.edit_button_text')
+`edit_button_class` | string            | --
 `horizontal`        | true \| false     | true
 `collection_path`   | string            | --
 `search_param`      | string            | `q`

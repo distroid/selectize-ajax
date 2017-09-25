@@ -25,6 +25,8 @@ module Selectize::Ajax::Core
         search_param: 'q',
         placeholder: nil,
         wrap_class: '',
+        add_button_class: '',
+        edit_button_class: '',
         input_html: {
           class: ''
         },
