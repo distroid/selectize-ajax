@@ -18,6 +18,10 @@ Or install it yourself as:
 
     $ gem install selectize-ajax
 
+In your application.js, include the following:
+
+    //= require selectize-ajax
+
 In your application.css, include the following:
 
     *= require selectize-ajax
@@ -109,7 +113,7 @@ For edit selected item you should add new modal and edit action path.
 %>
 ```
 
-> **WARNING**: if you want use  `edit_path` and do not have record id for generate link path you need use following templates:
+**WARNING**: if you want use  `edit_path` and do not have record id for generate link path you need use following templates:
 
  - Replace ID to string `{{id}}` - `edit_category_path(id: '{{id}}')`
  - Or use `edit_category_path(id: f.object.category_id || '{{id}}')`
@@ -147,4 +151,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/distro
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
