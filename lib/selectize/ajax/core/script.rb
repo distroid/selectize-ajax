@@ -16,7 +16,8 @@ module Selectize::Ajax::Core
       "<script type=\"text/javascript\">
         $(function(event) {
           setTimeout(function() {
-            new window.SelectizeAjax(#{tag_options.to_json});
+            obj = new window.SelectizeAjax(#{tag_options.to_json});
+            SJCollection['#{control.resource_id}'] = obj;
           });
         });
       </script>"

@@ -3,39 +3,28 @@ window.clearSelectizeModal = (modal) ->
   modal.find('.modal-body').empty()
   modal.data 'bs.modal', null
 
+window.SJCollection = {}
+
 window.SelectizeAjax = class SelectizeAjax
-  default_options =
-    resource_id: '',
-    resource_name: '',
-    collection: {},
-    collection_path: null,
-    search_param: 'q',
-    add_modal: null,
-    edit_modal: null,
-    edit_resource_template: null,
-
-  _self = () ->
-    @
-
   constructor: (options = {}) ->
-    _self.options = Object.assign(default_options, options)
+    @options = options
     @initialize()
 
   initialize: () ->
-    return unless _self.options.resource_id?
+    return unless @options.resource_id?
 
     @selectize_control()
     @control_buttons()
 
   selectize_control: () ->
-    $("##{_self.options.resource_id}").selectize
+    $("##{@options.resource_id}").selectize
       persist: false
       maxItems: 1
       valueField: 'value'
       labelField: 'label'
       sortField: 'label'
       searchField: 'label'
-      options: _self.options.collection
+      options: @options.collection
       render: item: (item, escape) ->
         [
           '<div>',
@@ -44,53 +33,55 @@ window.SelectizeAjax = class SelectizeAjax
         ].join(' ')
 
       load: (query, callback) ->
-        return callback() if !query.length || !_self.options.collection_path?
+        options = SJCollection[this.$input.attr('id')].options
+        return callback() if !query.length || !options.collection_path?
 
         self = this
         $.ajax
-          url: _self.options.collection_path
+          url: options.collection_path
           type: 'GET'
           dataType: 'json'
-          data: { "#{_self.options.search_param}": query }
+          data: { "#{options.search_param}": query }
           error: ->
             callback()
-            return
           success: (res) ->
             self.clearOptions()
             callback res
 
   control_buttons: () ->
-    if _self.options.add_modal?
+    if typeof @options.add_modal != 'undefined'
       @ajax_add_complete_script()
       @clear_add_form_script()
 
-    if _self.options.edit_modal?
+    if typeof @options.edit_modal != 'undefined'
       @ajax_edit_complete_script()
       @edit_button_script()
 
   ajax_add_complete_script: () ->
-    $(_self.options.add_modal).on 'ajax:complete', (evt, data, status, errors) ->
+    $(@options.add_modal).data('resource_id', @options.resource_id)
+    $(@options.add_modal).on 'ajax:complete', (evt, data, status, errors) ->
       return console.error 'Somthing went wrong, form submit return empty response.' unless data?
+      return if data.status != 200 && data.status != 201
 
-      if data.status == 200 or data.status == 201
-        if data.responseJSON == null || typeof data.responseJSON == 'undefined'
-          $(_self.options.add_modal).find('.modal-content').html data.responseText
-          $(_self.options.add_modal).trigger 'error'
-        else
-          $this = $(this)
-          provider = JSON.parse(data.responseText)
-          selectizer = $("##{_self.options.resource_id}")[0].selectize
+      if data.responseJSON == null || typeof data.responseJSON == 'undefined'
+        $(this).find('.modal-content').html data.responseText
+        $(this).trigger 'error'
+      else
+        provider = JSON.parse(data.responseText)
+        resource_id = $(this).data('resource_id')
+
+        if $("##{resource_id}").length > 0
+          selectizer = $("##{resource_id}")[0].selectize
           selectizer.addOption provider
           selectizer.addItem provider.value
-          $(_self.options.add_modal).modal 'hide'
-          $selector = $("form[data-target=\"#{_self.options.add_modal}\"")
-          if $selector.length > 0
-            $selector[0].reset()
+
+        $(this).modal('hide')
+        $(this).find('form')[0].reset() if $(this).find('form').length > 0
+
 
   clear_add_form_script: () ->
-    $(_self.options.add_modal).on 'hidden.bs.modal, show.bs.modal', ->
-      $selector = $("form[data-target=\"#{_self.options.add_modal}\"")
-      $selector[0].reset() if $selector.length > 0
+    $(@options.add_modal).on 'hidden.bs.modal, show.bs.modal', ->
+      $(this).find('form')[0].reset() if $(this).find('form').length > 0
 
       $('.error').each ->
         $(this).remove()
@@ -99,45 +90,43 @@ window.SelectizeAjax = class SelectizeAjax
         $(this).removeClass 'field_with_errors'
 
   ajax_edit_complete_script: () ->
-    $(document).on 'hidden.bs.modal', _self.options.edit_modal, ->
+    $(@options.edit_modal).data('resource_id', @options.resource_id)
+    $(document).on 'hidden.bs.modal', @options.edit_modal, ->
       clearSelectizeModal $(this)
 
-    $(document).on 'ajax:complete', _self.options.edit_modal, (e, data) ->
+    $(document).on 'ajax:complete', @options.edit_modal, (e, data) ->
       if data.responseJSON == null || typeof data.responseJSON == 'undefined'
-        $(_self.options.edit_modal).find('.modal-content').html data.responseText
-        $(_self.options.edit_modal).trigger 'error'
+        $(this).find('.modal-content').html data.responseText
+        $(this).trigger 'error'
       else
         data = data.responseJSON
-        $(_self.options.edit_modal).modal 'hide'
+        $(this).modal 'hide'
         if data.value != null and data.label != null
           $('div[data-value=\'' + data.value + '\']').find('span').text data.label
           $('div.selected[data-value=\'' + data.value + '\']').text data.label
 
   edit_button_script: () ->
-    $edit_link = $(".edit-#{_self.options.resource_name}")
-    if !$("##{_self.options.resource_id}").val()
-      $edit_link.hide()
-      $("##{_self.options.resource_id}")
+    if !$("##{@options.resource_id}").val()
+      $(".edit-#{@options.resource_id}").hide()
+      $("##{@options.resource_id}")
         .closest('.selectize-ajax-wrapper')
         .addClass('selectize-ajax-wrapper--empty')
     else
-      $edit_link.attr(
+      $(".edit-#{@options.resource_id}").attr(
         'href',
-        _self.options.edit_resource_template.replace('{{id}}', $("##{_self.options.resource_id}").val())
+        @options.edit_resource_template.replace('{{id}}', $("##{@options.resource_id}").val())
       )
 
-    $(document).on 'change', "##{_self.options.resource_id}", ->
+    $(document).on 'change', "##{@options.resource_id}", ->
+      resource_id = $(this).attr('id')
       if !$(this).val()
-        $("##{_self.options.resource_id}")
-          .closest('.selectize-ajax-wrapper')
-          .addClass('selectize-ajax-wrapper--empty')
-        return $edit_link.hide()
+        $(this).closest('.selectize-ajax-wrapper').addClass('selectize-ajax-wrapper--empty')
+        return $(".edit-#{resource_id}").hide()
 
-      $edit_link.show()
-      $edit_link.attr(
+      options = SJCollection[resource_id].options
+      $(".edit-#{resource_id}").show()
+      $(".edit-#{resource_id}").attr(
         'href',
-        _self.options.edit_resource_template.replace('{{id}}', $("##{_self.options.resource_id}").val())
+        options.edit_resource_template.replace('{{id}}', $(this).val())
       )
-      $("##{_self.options.resource_id}")
-        .closest('.selectize-ajax-wrapper')
-        .removeClass('selectize-ajax-wrapper--empty')
+      $(this).closest('.selectize-ajax-wrapper').removeClass('selectize-ajax-wrapper--empty')

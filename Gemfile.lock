@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     selectize-ajax (0.1.4)
+      coffee-rails (~> 4.2)
 
 GEM
   remote: https://rubygems.org/
