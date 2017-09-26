@@ -21,8 +21,8 @@ module Selectize::Ajax::Core
     end
 
     def value
+      return options.value if options.value.present?
       return resource.send(field) if resource_object? && resource.respond_to?(field)
-      options.value
     end
 
     def label
