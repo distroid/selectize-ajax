@@ -1,14 +1,23 @@
 <div class="<%= ('has-error' if control.has_error?) %> form-group selectize-ajax-wrapper">
-  <% if control.label %>
+  <% if control.label && control.options.horizontal %>
     <%= label_tag "#{control.resource_name}[#{control.field}]",
-      class: (control.options.horizontal ? 'col-sm-3 control-label' : 'col-sm-12') do %>
+      class: "col-sm-3 control-label #{control.options.label_class}" do %>
       <%= '*' if control.field_required? %>
       <%= control.label %>
     <% end %>
   <% end %>
+
   <div class="<%= control.wrap_classes %>">
+    <% if control.label && !control.options.horizontal %>
+      <%= label_tag "#{control.resource_name}[#{control.field}]", class: control.options.label_class do %>
+        <%= '*' if control.field_required? %>
+        <%= control.label %>
+      <% end %>
+    <% end %>
+
     <%= text_field_tag "#{control.resource_name}[#{control.field}]", control.value, id: control.resource_id,
         placeholder: control.options.placeholder, class: control.options.input_html[:class] %>
+
     <% if control.can_add? || control.can_edit? %>
       <span class="input-group-btn">
         <% if control.can_add? %>
@@ -19,6 +28,7 @@
             <%= control.options.add_button_text %>
           <% end %>
         <% end %>
+
         <% if control.can_edit? %>
           <%= link_to control.options.edit_path,
             class: "btn btn-primary btn-remote edit-#{control.resource_id} #{control.options.edit_button_class}",
@@ -30,11 +40,13 @@
       </span>
     <% end %>
   </div>
+
   <% if control.has_error? %>
     <span class="<%= (control.options.horizontal ? 'col-sm-9 col-sm-offset-3' : 'col-sm-12') %> help-block error">
       <%= control.resource_object.errors[control.field].first %>
     </span>
   <% end %>
+
   <%= script.html_safe %>
 </div>
 

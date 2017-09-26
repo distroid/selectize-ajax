@@ -130,6 +130,7 @@ Script automaticly will be replace `{{id}}` param to selected value.
 `value`             | mixed             | From object
 `placeholder`       | string            | --
 `wrap_class`        | string            | --
+`label_class`       | string            | --
 `input_html[class]` | string            | --
 `required`          | true \| false     | From object
 `collection`        | array             | []
