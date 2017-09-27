@@ -129,7 +129,8 @@ Script automaticly will be replace `{{id}}` param to selected value.
 `label`             | string            | From object
 `value`             | mixed             | From object
 `placeholder`       | string            | --
-`wrap_class`        | string            | --
+`wrap_class`        | string \| false   | --
+`wrap_class_only`   | true \| false     | false
 `label_class`       | string            | --
 `input_html[class]` | string            | --
 `required`          | true \| false     | From object

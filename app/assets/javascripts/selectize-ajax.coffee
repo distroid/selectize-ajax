@@ -83,10 +83,10 @@ window.SelectizeAjax = class SelectizeAjax
     $(@options.add_modal).on 'hidden.bs.modal, show.bs.modal', ->
       $(this).find('form')[0].reset() if $(this).find('form').length > 0
 
-      $('.error').each ->
+      $(this).find('.error').each ->
         $(this).remove()
 
-      $('.field_with_errors').each ->
+      $(this).find('.field_with_errors').each ->
         $(this).removeClass 'field_with_errors'
 
   ajax_edit_complete_script: () ->
@@ -112,6 +112,7 @@ window.SelectizeAjax = class SelectizeAjax
         .closest('.selectize-ajax-wrapper')
         .addClass('selectize-ajax-wrapper--empty')
     else
+      $(".edit-#{@options.resource_id}").show()
       $(".edit-#{@options.resource_id}").attr(
         'href',
         @options.edit_resource_template.replace('{{id}}', $("##{@options.resource_id}").val())

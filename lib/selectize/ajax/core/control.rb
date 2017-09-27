@@ -61,10 +61,13 @@ module Selectize::Ajax::Core
     end
 
     def wrap_classes
+      return if options.wrap_class == false
+      return options.wrap_class if options.wrap_class_only
+
       classes = [options.wrap_class]
       classes << 'selectize-input-group' if can_add?
       classes << (options.horizontal ? 'col-sm-9' : 'col-sm-12')
-      classes.reject!(&:blank?).join(' ')
+      classes.compact.reject(&:blank?).join(' ')
     end
 
     def has_error?
