@@ -13,11 +13,12 @@ module Selectize::Ajax::Core
     private
 
     def js_script_tag
-      "<script type=\"text/javascript\">
-        $(function(event) {
+      "<script type=\"text/javascript\" id=\"sj-#{control.resource_id}-script\">
+        $(function() {
           setTimeout(function() {
             obj = new window.SelectizeAjax(#{tag_options.to_json});
             SJCollection['#{control.resource_id}'] = obj;
+            $('#sj-#{control.resource_id}-script').remove();
           });
         });
       </script>"

@@ -1,16 +1,7 @@
-.input-group-btn .btn-remote {
-}
-
 .selectize-input-group {
   position: relative;
   display: table;
   border-collapse: separate;
-}
-
-.selectize-ajax-wrapper {
-  position: relative;
-  display: flex;
-  align-items: flex-end;
 }
 
 .selectize-ajax-wrapper.form-group {
