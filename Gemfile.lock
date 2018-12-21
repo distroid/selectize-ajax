@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    selectize-ajax (0.1.8)
+    selectize-ajax (0.1.9)
       coffee-rails (~> 4.2)
 
 GEM
