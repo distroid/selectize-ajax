@@ -4,4 +4,4 @@ gemspec
 
 gem 'railties'
 gem 'selectize-rails'
-gem 'coffee-rails', '~> 4.2'
+gem 'coffee-rails', '~> 5.0'
